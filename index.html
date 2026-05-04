@@ -3,262 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Stoner Network | Official Site</title>
-    <style>
-        :root {
-            --primary: #2ecc71;
-            --bg: #0b0b0b;
-            --surface: #1a1a1a;
-            --text: #f0f0f0;
-            --accent: #27ae60;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            background: rgba(0, 0, 0, 0.9);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #333;
-        }
-
-        .logo img {
-            height: 50px;
-            transition: 0.3s;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover { color: var(--primary); }
-
-        .cart-count-badge {
-            background: var(--primary);
-            color: black;
-            border-radius: 50%;
-            padding: 2px 7px;
-            font-size: 0.8rem;
-            margin-left: 5px;
-        }
-
-        /* --- Hero --- */
-        header {
-            height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle, #1a1a1a 0%, #0b0b0b 100%);
-            border-bottom: 3px solid var(--primary);
-        }
-
-        /* --- Sections --- */
-        section { padding: 80px 10%; }
-        h2 { color: var(--primary); font-size: 2.5rem; text-transform: uppercase; }
-
-        /* --- Shop --- */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background: var(--surface);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .product-card:hover { transform: translateY(-10px); border: 1px solid var(--primary); }
-
-        .product-card img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
-
-        .btn {
-            background: var(--primary);
-            color: black;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        /* --- Cart Sidebar --- */
-        #cart-sidebar {
-            position: fixed;
-            right: -400px;
-            top: 0;
-            width: 320px;
-            height: 100%;
-            background: #111;
-            z-index: 2000;
-            transition: 0.4s;
-            padding: 30px;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-        }
-
-        /* --- Account Modal --- */
-        #account-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--surface);
-            padding: 40px;
-            border-radius: 15px;
-            z-index: 3000;
-            width: 300px;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #222;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2500;
-        }
-    </style>
+    <title>The Stoner Network | Official Hub</title>
+    <!-- Linking the Modular CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
-    <!-- Overlay for Modals -->
-    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+    <div class="overlay" id="overlay" onclick="closeModals()"></div>
 
     <nav>
-        <div class="logo">
-            <img src="The Stoner Network Logo (Banner).png" alt="TSN Logo">
-        </div>
+        <div class="logo"><img src="The Stoner Network Logo (Banner).png" alt="TSN Logo"></div>
         <div class="nav-links">
             <a href="#about">About</a>
             <a href="#shop">Shop</a>
-            <a onclick="openAccount()" style="border: 1px solid var(--primary); padding: 5px 10px; border-radius: 5px;">Join Network</a>
-            <a onclick="toggleCart()">🛒 Cart <span id="cart-count" class="cart-count-badge">0</span></a>
+            <a onclick="openModal('signup-modal')" class="join-link">Join Network</a>
+            <a onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</a>
         </div>
     </nav>
 
     <header>
         <h1>THE STONER NETWORK</h1>
-        <p>Your connection to the elevated lifestyle.</p>
+        <p>A global collective for the elevated mind.</p>
+        <button class="btn hero-btn" onclick="location.href='#shop'">Enter the Shop</button>
     </header>
 
     <section id="about">
-        <h2>About The Network</h2>
-        <p style="max-width: 800px; font-size: 1.2rem; line-height: 1.6;">
-            The Stoner Network (TSN) is a collective of creators, enthusiasts, and innovators. 
-            We started as a small group and grew into a global network. This site is our hub for content, 
-            exclusive gear, and community connections.
-        </p>
+        <h2>The Vision</h2>
+        <p class="about-text">The Stoner Network is more than a brand; it's a digital ecosystem. We provide the tools, the community, and the gear to help you navigate the culture. From our weekly podcasts to our exclusive drops, everything we do is for the collective.</p>
     </section>
 
     <section id="shop">
-        <h2>Official Stash</h2>
-        <div class="shop-grid">
-            <div class="product-card">
-                <img src="https://via.placeholder.com/250x200/2ecc71/000000?text=TSN+Hoodie" alt="Hoodie">
-                <h3>The OG Hoodie</h3>
-                <p>$45.00</p>
-                <button class="btn" onclick="addToCart('The OG Hoodie', 45)">Add to Cart</button>
+        <h2>The Collection</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200/2ecc71/000000?text=TSN+Hoodie" alt="Hoodie">
+                <h3>Heavyweight Hoodie</h3>
+                <p>$55.00</p>
+                <button class="btn" onclick="addToCart('Heavyweight Hoodie', 55)">Add to Stash</button>
             </div>
-            <div class="product-card">
-                <img src="https://via.placeholder.com/250x200/2ecc71/000000?text=TSN+Grinder" alt="Grinder">
-                <h3>TSN Zinc Grinder</h3>
-                <p>$20.00</p>
-                <button class="btn" onclick="addToCart('TSN Zinc Grinder', 20)">Add to Cart</button>
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200/2ecc71/000000?text=TSN+Tray" alt="Tray">
+                <h3>Glow Rolling Tray</h3>
+                <p>$25.00</p>
+                <button class="btn" onclick="addToCart('Glow Rolling Tray', 25)">Add to Stash</button>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200/2ecc71/000000?text=TSN+Grinder" alt="Grinder">
+                <h3>4-Piece Grinder</h3>
+                <p>$30.00</p>
+                <button class="btn" onclick="addToCart('4-Piece Grinder', 30)">Add to Stash</button>
             </div>
         </div>
     </section>
 
-    <!-- Sidebar Cart -->
+    <!-- Cart Sidebar -->
     <div id="cart-sidebar">
-        <button onclick="toggleCart()" style="background:none; color:white; border:none; float:right; font-size: 2rem; cursor:pointer;">&times;</button>
-        <h2>Your Cart</h2>
-        <div id="cart-items"></div>
-        <hr>
+        <h2 class="cart-header">
+            Your Cart <span onclick="toggleCart()" class="close-btn">&times;</span>
+        </h2>
+        <div id="cart-content">
+            <p id="empty-msg">Your cart is empty.</p>
+        </div>
+        <hr class="divider">
         <h3>Total: $<span id="cart-total">0.00</span></h3>
-        <button class="btn" onclick="alert('Proceeding to Secure Checkout...')">Checkout</button>
+        <button class="btn" onclick="checkout()">Proceed to Checkout</button>
     </div>
 
-    <!-- Join Modal -->
-    <div id="account-modal">
-        <h2 style="margin-top:0;">Join TSN</h2>
-        <p>Create your network profile.</p>
-        <input type="text" placeholder="Username">
-        <input type="email" placeholder="Email Address">
-        <input type="password" placeholder="Password">
-        <button class="btn" onclick="alert('Account Created! Check your email.')">Sign Up</button>
+    <!-- Sign Up Modal -->
+    <div id="signup-modal" class="modal">
+        <h2 style="margin-top:0;">Join the Network</h2>
+        <p>Register to receive your welcome kit.</p>
+        <form id="network-form">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" placeholder="Create Password" required>
+            <button type="submit" class="btn">Create Account</button>
+        </form>
     </div>
 
-    <script>
-        let cart = [];
-        let total = 0;
-
-        function toggleCart() {
-            const side = document.getElementById('cart-sidebar');
-            side.style.right = (side.style.right === '0px') ? '-400px' : '0px';
-        }
-
-        function openAccount() {
-            document.getElementById('account-modal').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function closeAll() {
-            document.getElementById('account-modal').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        function addToCart(name, price) {
-            cart.push({name, price});
-            total += price;
-            updateUI();
-            if(document.getElementById('cart-sidebar').style.right !== '0px') toggleCart();
-        }
-
-        function updateUI() {
-            document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('cart-total').innerText = total.toFixed(2);
-            const list = document.getElementById('cart-items');
-            list.innerHTML = cart.map(item => `
-                <div style="display:flex; justify-content:space-between; margin:10px 0; background:#222; padding:10px; border-radius:5px;">
-                    <span>${item.name}</span>
-                    <span>$${item.price}</span>
-                </div>
-            `).join('');
-        }
-    </script>
+    <!-- Linking the Modular JS -->
+    <script src="script.js"></script>
 </body>
 </html>
