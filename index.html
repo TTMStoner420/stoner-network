@@ -4,34 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Stoner Network | Official Hub</title>
-    <!-- Linking the Modular CSS -->
+    
+    <!-- Link to your CSS file -->
     <link rel="stylesheet" href="style.css">
-    <!-- EmailJS SDK -->
+    
+    <!-- Supabase SDK (Required for multi-device login) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- EmailJS SDK (Required for welcome emails) -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
+    <!-- Overlay for closing menus/modals -->
     <div class="overlay" id="overlay" onclick="closeModals()"></div>
 
     <nav>
-        <div class="logo"><img src="The Stoner Network Logo (Banner).png" alt="TSN Logo"></div>
+        <div class="logo">
+            <img src="The Stoner Network Logo (Banner).png" alt="TSN Logo">
+        </div>
         <div class="nav-links">
             <a href="#about">About</a>
             <a href="#shop">Shop</a>
-            <a onclick="openModal('signup-modal')" class="join-link">Join Network</a>
+            <!-- This link text and function will change once the user logs in -->
+            <a onclick="openModal()" class="join-link">Join Network</a>
             <a onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</a>
         </div>
     </nav>
 
     <header>
         <h1>THE STONER NETWORK</h1>
-        <p>A global collective for the elevated mind.</p>
+        <p>Elevate your digital experience across every device.</p>
         <button class="btn hero-btn" onclick="location.href='#shop'">Enter the Shop</button>
     </header>
 
     <section id="about">
         <h2>The Vision</h2>
-        <p class="about-text">The Stoner Network is more than a brand; it's a digital ecosystem. We provide the tools, the community, and the gear to help you navigate the culture. From our weekly podcasts to our exclusive drops, everything we do is for the collective.</p>
+        <p class="about-text">The Stoner Network is more than a brand; it's a digital ecosystem. We provide the tools, the community, and the gear to help you navigate the culture.</p>
     </section>
 
     <section id="shop">
@@ -49,20 +58,15 @@
                 <p>$25.00</p>
                 <button class="btn" onclick="addToCart('Glow Rolling Tray', 25)">Add to Stash</button>
             </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300x200/2ecc71/000000?text=TSN+Grinder" alt="Grinder">
-                <h3>4-Piece Grinder</h3>
-                <p>$30.00</p>
-                <button class="btn" onclick="addToCart('4-Piece Grinder', 30)">Add to Stash</button>
-            </div>
         </div>
     </section>
 
     <!-- Cart Sidebar -->
     <div id="cart-sidebar">
-        <h2 class="cart-header">
-            Your Cart <span onclick="toggleCart()" class="close-btn">&times;</span>
-        </h2>
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <span onclick="toggleCart()" class="close-btn">&times;</span>
+        </div>
         <div id="cart-content">
             <p id="empty-msg">Your cart is empty.</p>
         </div>
@@ -71,19 +75,34 @@
         <button class="btn" onclick="checkout()">Proceed to Checkout</button>
     </div>
 
-    <!-- Sign Up Modal -->
-    <div id="signup-modal" class="modal">
-        <h2 style="margin-top:0;">Join the Network</h2>
-        <p>Register to receive your welcome kit.</p>
-        <form id="network-form">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email Address" required>
-            <input type="password" placeholder="Create Password" required>
-            <button type="submit" class="btn">Create Account</button>
-        </form>
+    <!-- The Auth Modal (Login/Signup) -->
+    <div id="network-modal" class="modal">
+        <div class="modal-tabs">
+            <button onclick="showTab('login')" id="login-tab-btn" class="tab-btn active">Login</button>
+            <button onclick="showTab('signup')" id="signup-tab-btn" class="tab-btn">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form-container">
+            <form onsubmit="handleLogin(event)">
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Sign Up Form (Linked to EmailJS via ID 'network-form') -->
+        <div id="signup-form-container" style="display:none;">
+            <form id="network-form">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Create Password" required>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Linking the Modular JS -->
+    <!-- The Brain: Linking your JavaScript at the very bottom -->
     <script src="script.js"></script>
 </body>
 </html>
