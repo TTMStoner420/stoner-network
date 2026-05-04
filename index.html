@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Stoner Network | Official Hub</title>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- SDKs -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -22,7 +20,7 @@
             <a href="#about">About</a>
             <a href="#shop">Shop</a>
             
-            <!-- Slick Dropdown Menu -->
+            <!-- THE DROPDOWN STRUCTURE -->
             <div class="user-menu-container">
                 <a onclick="openModal()" class="join-link">Join Network</a>
                 <div id="user-dropdown" class="dropdown-content">
@@ -44,53 +42,32 @@
     </header>
 
     <section id="shop">
-        <h2>The Collection</h2>
         <div class="grid">
             <div class="card">
-                <img src="https://via.placeholder.com/300x200/2ecc71/000000?text=TSN+Hoodie" alt="Hoodie">
                 <h3>Heavyweight Hoodie</h3>
                 <p>$55.00</p>
                 <button class="btn" onclick="addToCart('Heavyweight Hoodie', 55)">Add to Stash</button>
             </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300x200/2ecc71/000000?text=TSN+Tray" alt="Tray">
-                <h3>Glow Rolling Tray</h3>
-                <p>$25.00</p>
-                <button class="btn" onclick="addToCart('Glow Rolling Tray', 25)">Add to Stash</button>
-            </div>
         </div>
     </section>
 
-    <div id="cart-sidebar">
-        <div class="cart-header">
-            <h2>Your Cart</h2>
-            <span onclick="toggleCart()" class="close-btn">&times;</span>
-        </div>
-        <div id="cart-content"></div>
-        <hr class="divider">
-        <h3>Total: $<span id="cart-total">0.00</span></h3>
-        <button class="btn" onclick="checkout()">Proceed to Checkout</button>
-    </div>
-
     <div id="network-modal" class="modal">
         <div class="modal-tabs">
-            <button onclick="showTab('login')" id="login-tab-btn" class="tab-btn active">Login</button>
-            <button onclick="showTab('signup')" id="signup-tab-btn" class="tab-btn">Sign Up</button>
+            <button onclick="showTab('login')" class="tab-btn active">Login</button>
+            <button onclick="showTab('signup')" class="tab-btn">Sign Up</button>
         </div>
-
         <div id="login-form-container">
             <form onsubmit="handleLogin(event)">
-                <input type="email" placeholder="Email Address" required>
+                <input type="email" placeholder="Email" required>
                 <input type="password" placeholder="Password" required>
                 <button type="submit" class="btn">Login</button>
             </form>
         </div>
-
         <div id="signup-form-container" style="display:none;">
             <form id="network-form">
                 <input type="text" name="username" placeholder="Username" required>
-                <input type="email" name="email" placeholder="Email Address" required>
-                <input type="password" name="password" placeholder="Create Password" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <button type="submit" class="btn">Create Account</button>
             </form>
         </div>
